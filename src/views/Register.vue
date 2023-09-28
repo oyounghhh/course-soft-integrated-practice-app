@@ -1,9 +1,6 @@
 <template>
     <div class="wrapper">
-        <header>
-            <router-link class="back" to="/login">&lt;</router-link>
-            <span class="title">注册</span>
-        </header>
+        <ViewHeader to-router="/login" title="注册" />
         <h1>欢迎注册</h1>
         <form>
             <label class="label" for="phone">手机号码</label>
@@ -77,6 +74,7 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
+import ViewHeader from '@/components/ViewHeader.vue'
 
 const router = useRouter()
 
