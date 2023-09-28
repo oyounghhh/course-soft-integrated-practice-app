@@ -1,8 +1,8 @@
 <template>
-    <div class="wrapper">
+    <div class="wrapper" ref="wrapperEle">
         <ViewHeader to-router="/login" title="注册" />
         <h1>欢迎注册</h1>
-        <form>
+        <form @focusin="focusin" @focusout="focusout">
             <label class="label" for="phone">手机号码</label>
             <input
                 type="number"
@@ -77,6 +77,7 @@ import { ref } from 'vue'
 import ViewHeader from '@/components/ViewHeader.vue'
 
 const router = useRouter()
+const wrapperEle = ref(null)
 
 const usersRef = ref({
     phone: '',
@@ -94,6 +95,13 @@ function register() {
     }
 
     router.push('login')
+}
+
+function focusin() {
+    wrapperEle.value.style.minHeight = `150vh`
+}
+function focusout() {
+    wrapperEle.value.style.minHeight = ''
 }
 
 /////////////////////////////////////
@@ -130,6 +138,7 @@ function validate(users) {
 <style scoped>
 .wrapper {
     --left: 10px;
+    min-height: 100vh;
 }
 header {
     height: 40px;
