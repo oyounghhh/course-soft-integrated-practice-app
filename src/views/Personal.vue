@@ -1,5 +1,5 @@
 <template>
-    <main>内容</main>
+    <main>个人页面</main>
     <FooterNavigate />
 </template>
 

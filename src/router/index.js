@@ -5,7 +5,7 @@ import { getSessionStorage } from '@/utils/storage'
 const routes = [
     {
         path: '/',
-        name: 'home',
+        name: 'Home',
         component: () => import('@/views/Home.vue'),
     },
     {
@@ -17,6 +17,16 @@ const routes = [
         path: '/register',
         name: 'Register',
         component: () => import('@/views/Register.vue'),
+    },
+    {
+        path: '/personal',
+        name: 'Personal',
+        component: () => import('@/views/Personal.vue'),
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'NotFound',
+        component: () => import('@/views/404.vue'),
     },
 ]
 
