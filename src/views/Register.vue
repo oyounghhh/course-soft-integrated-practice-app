@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper" ref="wrapperEle">
-        <ViewHeader to-router="/login" title="注册" />
+        <ViewHeader title="注册" />
         <h1>欢迎注册</h1>
         <form @focusin="focusin" @focusout="focusout">
             <label class="label" for="phone">手机号码</label>
@@ -52,6 +52,7 @@
             <!-- <span class="line"></span> -->
             <label class="label" for="password-first">密码</label>
             <input
+                autocomplete
                 type="password"
                 id="password-first"
                 placeholder="请输入密码"
@@ -60,6 +61,7 @@
             <!-- <span class="line"></span> -->
             <label class="label" for="password-again">密码</label>
             <input
+                autocomplete
                 type="password"
                 id="password-again"
                 placeholder="请再次输入密码"

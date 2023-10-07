@@ -1,21 +1,25 @@
 <template>
     <header>
-        <router-link class="back" :to="props.toRouter">&lt;</router-link>
+        <button @click="back" class="back">&lt;</button>
         <span class="title">{{ props.title }}</span>
     </header>
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
 const props = defineProps({
-    toRouter: {
-        type: String,
-        required: true,
-    },
     title: {
         type: String,
         required: true,
     },
 })
+
+function back() {
+    router.back()
+}
 </script>
 
 <style scoped>

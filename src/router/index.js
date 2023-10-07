@@ -29,14 +29,16 @@ const router = createRouter({
 
 const publicPath = ['/login', '/register']
 
-router.beforeEach((to) => {
+router.beforeEach((to, from) => {
     const toPath = to.path
     const isLogin = getSessionStorage('isLogin')
-
-    if (!publicPath.includes(toPath)) {
-        if (!isLogin) {
-            return '/login'
-        }
+    console.log(isLogin, toPath)
+    if (isLogin && toPath === '/login') {
+        // 已经登录时，不允许进入登录页
+        return false
+    } else if (!isLogin && !publicPath.includes(toPath)) {
+        // 未登录时，只允许进入公共页面
+        return '/login'
     }
 })
 

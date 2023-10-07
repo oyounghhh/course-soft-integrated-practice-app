@@ -30,13 +30,8 @@ a {
     text-decoration: none;
 }
 /*  */
-input:active {
+input {
     outline: none;
-    border: none;
-}
-input:hover {
-    outline: none;
-    border: none;
 }
 
 div,
