@@ -1,8 +1,10 @@
 import axios from 'axios'
+import { BASE_URL } from '@/constants/request'
 
-// const BASE_URL = 'http://192.168.43.89:8080'
-const BASE_URL = 'http://192.168.43.191:4523/m1/3350410-0-default'
 function getUrl(path) {
+    if (path[0] !== '/') {
+        throw new Error('path 格式错误')
+    }
     return `${BASE_URL}${path}`
 }
 
