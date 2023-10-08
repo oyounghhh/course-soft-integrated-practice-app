@@ -3,46 +3,38 @@
     <section>
         <div class="info-box">
             <div class="content">
-                <img class="avatarImg" :src="users.avatarUrl" />
+                <img class="avatarImg" :src="users.avatarUrl" alt="avatar" />
                 <div class="user-info">
                     <p>{{ users.realName }}</p>
                     <p>账号: {{ users.userId }}</p>
                 </div>
             </div>
         </div>
-        <ul class="options-box">
-            <li class="options-li">
-                <router-link to="/personal" class="options-item"
-                    ><span>我的预约</span> <span>></span></router-link
-                >
+        <ul class="menus-ul">
+            <li v-for="menu of menus" class="menu-li">
+                <router-link :to="menu.routeTo" class="menu-item"
+                    ><p class="title-wrap">
+                        <IconBox width="24px" height="24px">
+                            <component :is="menu.icon" />
+                        </IconBox>
+                        <span>{{ menu.title }}</span>
+                    </p>
+                    <IconBox width="20px" height="20px">
+                        <SvgEnter />
+                    </IconBox>
+                </router-link>
             </li>
-            <li class="options-li">
-                <router-link to="/personal" class="options-item"
-                    ><span>我的服务</span> <span>></span></router-link
-                >
-            </li>
-            <li class="options-li">
-                <router-link to="/personal" class="options-item"
-                    ><span>我的医生</span> <span>></span></router-link
-                >
-            </li>
-            <li class="options-li">
-                <router-link to="/personal" class="options-item"
-                    ><span>问诊订单</span> <span>></span></router-link
-                >
-            </li>
-            <li class="options-li">
-                <router-link to="/personal" class="options-item"
-                    ><span>商城订单</span> <span>></span></router-link
-                >
-            </li>
-            <li class="options-li">
-                <button
-                    to="/personal"
-                    class="options-item logout"
-                    @click="logout"
-                >
-                    <span>退出登录</span> <span>></span>
+            <li class="menu-li">
+                <button to="/personal" class="menu-item logout" @click="logout">
+                    <p class="title-wrap">
+                        <IconBox width="24px" height="24px">
+                            <SvgLogout />
+                        </IconBox>
+                        <span>退出登录</span>
+                    </p>
+                    <IconBox width="20px" height="20px">
+                        <SvgEnter />
+                    </IconBox>
                 </button>
             </li>
         </ul>
@@ -52,9 +44,26 @@
 
 <script setup>
 import FooterNavigate from '@/components/FooterNavigate.vue'
+import IconBox from '@/components/IconBox.vue'
+import SvgAppointment from '@/assets/svg/appointment.svg'
+import SvgEnter from '@/assets/svg/enter.svg'
+import SvgLogout from '@/assets/svg/logout.svg'
+import SvgService from '@/assets/svg/service.svg'
+import SvgDoctor from '@/assets/svg/doctor.svg'
+import SvgBill from '@/assets/svg/bill.svg'
+import SvgShopOrder from '@/assets/svg/shop-order.svg'
+
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { setSessionStorage } from '@/utils/storage'
+
+const menus = [
+    { routeTo: '/personal', title: '我的预约', icon: SvgAppointment },
+    { routeTo: '/personal', title: '我的服务', icon: SvgService },
+    { routeTo: '/personal', title: '我的医生', icon: SvgDoctor },
+    { routeTo: '/personal', title: '问诊订单', icon: SvgBill },
+    { routeTo: '/personal', title: '商城订单', icon: SvgShopOrder },
+]
 
 const router = useRouter()
 const users = ref({
@@ -111,27 +120,36 @@ section {
         }
     }
 
-    .options-box {
-        .options-li {
-            &:not(:last-of-type) {
-                border-bottom: 1px solid #eee;
-            }
-            .options-item {
-                color: black;
-                font-size: 1rem;
-                background-color: transparent;
+    .menus-ul > .menu-li:not(:last-of-type) {
+        border-bottom: 1px solid #eee;
+    }
+    .menus-ul > .menu-li > .menu-item {
+        color: black;
+        font-size: 1rem;
+        background-color: transparent;
 
-                padding: 10px 20px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                &.logout {
-                    border: none;
-                    width: 100%;
-                    height: 100%;
-                }
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .title-wrap {
+            display: flex;
+
+            span {
+                margin-left: 6px;
+                font-size: 1.1rem;
+                color: black;
             }
         }
+    }
+    .logout {
+        border: none;
+        width: 100%;
+        height: 100%;
+    }
+    .logout:active {
+        filter: brightness(1.1);
     }
 }
 </style>
