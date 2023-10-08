@@ -2,10 +2,14 @@
     <header>
         <div class="select-hospital">
             <span>xxx医院</span>
-            <span>v</span>
+            <IconBox width="20px">
+                <SvgPullDown />
+            </IconBox>
         </div>
         <div class="inbox">
-            <span>消息</span>
+            <IconBox>
+                <SvgNotice />
+            </IconBox>
         </div>
     </header>
     <main>
@@ -90,6 +94,9 @@
 
 <script setup>
 import FooterNavigate from '@/components/FooterNavigate.vue'
+import IconBox from '@/components/IconBox.vue'
+import SvgNotice from '@/assets/svg/notice.svg'
+import SvgPullDown from '@/assets/svg/pull-down.svg'
 
 import homeCoverImg from '@/assets/img/home-cover.png'
 
@@ -175,6 +182,12 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 0 10px;
+
+    .select-hospital {
+        display: flex;
+        height: 100%;
+        align-items: center;
+    }
 }
 main {
     padding-bottom: 160px;
