@@ -9,49 +9,16 @@
         </div>
     </header>
     <main>
-        <div class="cover-box"></div>
+        <div class="cover-box">
+            <img :src="homeCoverImg" alt="首页封面" />
+        </div>
         <nav>
-            <ul class="main-options">
-                <li class="main-option option-item">
-                    <i></i>
+            <ul class="menu-ul">
+                <li v-for="menu of menus" class="menu-li">
+                    <img :src="menu.img" :alt="menu.title" />
                     <p>
-                        <span>免费咨询</span>
-                        <span>新兴冠状病毒肺炎</span>
-                    </p>
-                </li>
-                <li class="main-option option-item">
-                    <i></i>
-                    <p>
-                        <span>网络问诊</span>
-                        <span>图文视频网络咨询</span>
-                    </p>
-                </li>
-                <li class="main-option option-item">
-                    <i></i>
-                    <p>
-                        <span>e心门诊</span>
-                        <span>复旦医科大学专家</span>
-                    </p>
-                </li>
-                <li class="main-option option-item">
-                    <i></i>
-                    <p>
-                        <span>慢病管理</span>
-                        <span>血压血糖健康管理</span>
-                    </p>
-                </li>
-                <li class="main-option option-item">
-                    <i></i>
-                    <p>
-                        <span>上门护理</span>
-                        <span>网上购买上门服务</span>
-                    </p>
-                </li>
-                <li class="main-option option-item">
-                    <i></i>
-                    <p>
-                        <span>团检预约</span>
-                        <span>团体体检套餐定制</span>
+                        <span>{{ menu.title }}</span>
+                        <span>{{ menu.info }}</span>
                     </p>
                 </li>
             </ul>
@@ -73,8 +40,12 @@
             <h2>推荐医生</h2>
             <div class="content">
                 <ul class="recommend-doctor-ul">
-                    <li v-for="doctor in doctorRecommend" class="">
-                        <i class="doctor-portrait"></i>
+                    <li v-for="doctor in doctorRecommend">
+                        <img
+                            :src="doctor.portrait"
+                            alt="人像"
+                            class="doctor-portrait"
+                        />
                         <span class="doctor-name">{{ doctor.name }} </span>
                         <span class="doctor-info">{{ doctor.info }}</span>
                     </li>
@@ -88,7 +59,9 @@
             <div class="content">
                 <ul class="healthy-assess">
                     <li v-for="item in healthyAssessObjs">
-                        <div></div>
+                        <div>
+                            <img :src="item.img" :alt="item.info" />
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -100,7 +73,9 @@
             <div class="content">
                 <ul class="health-consult">
                     <li v-for="item in healthConsult">
-                        <div class="cover"></div>
+                        <div class="cover">
+                            <img :src="item.coverUrl" :alt="item.intro" />
+                        </div>
                         <div class="content">
                             <h3>{{ item.title }}</h3>
                             <p>{{ item.intro }}</p>
@@ -116,49 +91,71 @@
 <script setup>
 import FooterNavigate from '@/components/FooterNavigate.vue'
 
-const doctorRecommend = [
-    {
-        name: 'A某某',
-        info: '主任医师',
-    },
-    {
-        name: 'B某某',
-        info: '副主任医师',
-    },
-    {
-        name: 'C某某',
-        info: '主任医师',
-    },
-    {
-        name: 'D某某',
-        info: '主任医师',
-    },
-    {
-        name: 'E某某',
-        info: '主任医师',
-    },
-    {
-        name: 'F某某',
-        info: '主任医师',
-    },
-    {
-        name: 'G某某',
-        info: '主任医师',
-    },
-    {
-        name: 'H某某',
-        info: '主任医师',
-    },
+import homeCoverImg from '@/assets/img/home-cover.png'
+
+import healthConsultImg1 from '@/assets/img/health-consult1.png'
+import healthConsultImg2 from '@/assets/img/health-consult2.png'
+
+import assessImg01 from '@/assets/img/assess1.png'
+import assessImg02 from '@/assets/img/assess2.png'
+import assessImg03 from '@/assets/img/assess3.png'
+import assessImg04 from '@/assets/img/assess4.png'
+import assessImg05 from '@/assets/img/assess5.png'
+import assessImg06 from '@/assets/img/assess6.png'
+
+import menuImg01 from '@/assets/img/menu01.png'
+import menuImg02 from '@/assets/img/menu02.png'
+import menuImg03 from '@/assets/img/menu03.png'
+import menuImg04 from '@/assets/img/menu04.png'
+import menuImg05 from '@/assets/img/menu05.png'
+import menuImg06 from '@/assets/img/menu06.png'
+
+import doctorPortrait1 from '@/assets/img/doctor1.jpg'
+import doctorPortrait2 from '@/assets/img/doctor2.jpg'
+import doctorPortrait3 from '@/assets/img/doctor3.jpg'
+import doctorPortrait4 from '@/assets/img/doctor4.jpg'
+import doctorPortrait5 from '@/assets/img/doctor5.jpg'
+import doctorPortrait6 from '@/assets/img/doctor6.jpg'
+import doctorPortrait7 from '@/assets/img/doctor7.jpg'
+import doctorPortrait8 from '@/assets/img/doctor8.jpg'
+
+const menus = [
+    { title: '免费咨询', info: '新兴冠状病毒肺炎', img: menuImg01 },
+    { title: '网络问诊', info: '图文视频网络咨询', img: menuImg02 },
+    { title: 'e心门诊', info: '复旦医科大学专家', img: menuImg03 },
+    { title: '慢病管理', info: '血压血糖健康管理', img: menuImg04 },
+    { title: '上门护理', info: '网上购买上门服务', img: menuImg05 },
+    { title: '团检预约', info: '团体体检套餐定制', img: menuImg06 },
 ]
 
-const healthyAssessObjs = ['', '', '', '', '', '', '']
+const doctorRecommend = [
+    { name: 'A某某', portrait: doctorPortrait1, info: '主任医师' },
+    { name: 'B某某', portrait: doctorPortrait2, info: '副主任医师' },
+    { name: 'C某某', portrait: doctorPortrait3, info: '主任医师' },
+    { name: 'D某某', portrait: doctorPortrait4, info: '主任医师' },
+    { name: 'E某某', portrait: doctorPortrait5, info: '主任医师' },
+    { name: 'F某某', portrait: doctorPortrait6, info: '主任医师' },
+    { name: 'G某某', portrait: doctorPortrait7, info: '主任医师' },
+    { name: 'H某某', portrait: doctorPortrait8, info: '主任医师' },
+]
+
+const healthyAssessObjs = [
+    { img: assessImg01, info: '健康评估' },
+    { img: assessImg02, info: '健康评估' },
+    { img: assessImg03, info: '健康评估' },
+    { img: assessImg04, info: '健康评估' },
+    { img: assessImg05, info: '健康评估' },
+    { img: assessImg06, info: '健康评估' },
+]
 
 const healthConsult = [
     {
+        coverUrl: healthConsultImg1,
         title: '查出肺结核，我是不是要得肺癌了？',
         intro: '肺结核一定会导致肺癌吗？',
     },
     {
+        coverUrl: healthConsultImg2,
         title: '体检发现甲状腺结节，怎么办？    ',
         intro: '日常需注意什么？',
     },
@@ -166,6 +163,12 @@ const healthConsult = [
 </script>
 
 <style scoped lang="scss">
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 header {
     height: 60px;
     display: flex;
@@ -185,24 +188,23 @@ main {
 
     ////////////////////导航选项卡
     nav {
-        .main-options {
+        .menu-ul {
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-gap: 10px;
             padding: 10px;
-            .main-option {
+            .menu-li {
                 height: 70px;
                 border-radius: 4px;
                 box-shadow: 0 0 5px 1px #ccc;
-            }
-            .option-item {
                 display: flex;
                 align-items: center;
-                justify-content: center;
-                i {
+                justify-content: space-evenly;
+                img {
                     display: block;
                     width: 40px;
                     height: 40px;
+                    object-fit: cover;
                 }
                 p {
                     display: flex;
@@ -290,7 +292,7 @@ main {
             display: flex;
             padding-bottom: 10px;
             li {
-                flex: 1 0 150px;
+                flex: 1 0 225px;
                 height: 100px;
                 margin: 0 10px;
                 background-color: #ccc;
