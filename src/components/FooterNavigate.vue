@@ -6,6 +6,9 @@
                 :class="{ active: curRouterName === 'Home' }"
                 to="/"
             >
+                <IconBox :width="width" :height="height">
+                    <SvgHospital />
+                </IconBox>
                 <span>云医院</span>
             </router-link>
             <router-link
@@ -13,6 +16,9 @@
                 :class="{ active: curRouterName === 'Shop' }"
                 to="/"
             >
+                <IconBox :width="width" :height="height">
+                    <SvgShop />
+                </IconBox>
                 <span>商城</span>
             </router-link>
             <router-link
@@ -20,6 +26,9 @@
                 :class="{ active: curRouterName === 'More' }"
                 to="/"
             >
+                <IconBox :width="width" :height="height">
+                    <SvgFind />
+                </IconBox>
                 <span>发现</span>
             </router-link>
             <router-link
@@ -27,6 +36,9 @@
                 :class="{ active: curRouterName === 'Personal' }"
                 to="/personal"
             >
+                <IconBox :width="width" :height="height">
+                    <SvgUser />
+                </IconBox>
                 <span>我</span>
             </router-link>
         </nav>
@@ -36,11 +48,20 @@
 <script setup>
 import { useRouter } from 'vue-router'
 
+import IconBox from '@/components/IconBox.vue'
+import SvgHospital from '@/assets/svg/hospital.svg'
+import SvgShop from '@/assets/svg/shop.svg'
+import SvgFind from '@/assets/svg/find.svg'
+import SvgUser from '@/assets/svg/user.svg'
+
+const width = '20px'
+const height = width
+
 const router = useRouter()
 const curRouterName = router.currentRoute.value.name
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 /*********************** footer ***********************/
 footer {
     width: 100%;
@@ -79,5 +100,9 @@ footer nav {
 
 .router-link.active {
     color: skyblue;
+
+    :deep(path) {
+        fill: skyblue;
+    }
 }
 </style>

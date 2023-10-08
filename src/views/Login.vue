@@ -234,16 +234,6 @@ function validLoginInfo(loginInfo) {
         }
     }
 }
-.icon-box {
-    display: inline-block;
-    --width: 23px;
-    width: var(--width, 27px);
-    height: var(--width, 27px);
-    .icon {
-        width: 100%;
-        height: 100%;
-    }
-}
 @media screen and (min-width: 450px) {
     .wrapper {
         margin: auto;

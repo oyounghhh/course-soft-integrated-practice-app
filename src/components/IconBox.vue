@@ -1,6 +1,6 @@
 <template>
     <i class="icon-box" :style="{ width, height }">
-        <slot class="icon"></slot>
+        <slot></slot>
     </i>
 </template>
 
@@ -20,10 +20,11 @@ const props = defineProps({
 <style scoped lang="scss">
 .icon-box {
     display: block;
-    width: 60px;
-    height: 60px;
+    width: 30px;
+    height: 30px;
 }
-.icon {
+
+.icon-box :deep(svg) {
     width: 100%;
     height: 100%;
 }
