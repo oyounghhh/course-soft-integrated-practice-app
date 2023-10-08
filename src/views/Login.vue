@@ -63,7 +63,9 @@
             <div class="box-item button-box">
                 <button @click.prevent="login">
                     登录
-                    <span :class="{ logining: isLogining }">......</span>
+                    <span class="loading-span" :class="{ logining: isLogining }"
+                        >......</span
+                    >
                 </button>
             </div>
         </form>
@@ -138,107 +140,139 @@ function validLoginInfo(loginInfo) {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 /*********************** 总容器 ***********************/
 .wrapper {
     width: 100%;
     height: 100%;
     background-image: linear-gradient(45deg, #266c9f, #266c9f, #7eb059);
     overflow: hidden;
-}
 
-@media screen and (min-width: 450px) {
-    .wrapper {
-        margin: auto;
-        width: 450px;
+    /*********************** 标题部分 ***********************/
+    h1 {
+        text-align: center;
+        color: #fff;
+        font-size: 2rem;
+        font-weight: bold;
+        margin: 50px 0;
     }
-}
 
-/*********************** 标题部分 ***********************/
-h1 {
-    text-align: center;
-    color: #fff;
-    font-size: 2rem;
-    font-weight: bold;
-    margin: 50px 0;
-}
+    /*********************** 内容部分 ***********************/
+    .wrapper-content {
+        width: 86%;
+        margin: 0 auto;
+        background-color: #fff;
+        border-radius: 15px;
 
-/*********************** 内容部分 ***********************/
-.wrapper-content {
-    width: 86%;
-    margin: 0 auto;
-    background-color: #fff;
-    border-radius: 15px;
+        box-sizing: border-box;
+        padding: 20px;
 
-    box-sizing: border-box;
-    padding: 20px;
-}
+        .box-item {
+            width: 100%;
+            height: 45px;
+            padding: 0 5px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
 
-.box-item {
-    width: 100%;
-    height: 45px;
-    padding: 0 5px;
-    margin: 10px 0;
-    overflow: hidden;
-}
-.input-box {
-    border: 1px solid #ccc;
-    border-radius: 7px;
-    display: flex;
-    align-items: center;
-}
-.input-box label {
-    margin: 0 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+        .input-box {
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+
+            label {
+                margin: 0 5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            input {
+                font-size: 1rem;
+                flex-grow: 1;
+                border: none;
+                outline: none;
+            }
+        }
+        .option-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .button-box {
+            button {
+                width: 100%;
+                height: 100%;
+                border: none;
+                background-color: #70b0bc;
+                color: white;
+                border-radius: 8px;
+                font-size: 1.2rem;
+                .loading-span {
+                    display: none;
+                    overflow: hidden;
+
+                    &.logining {
+                        width: 0rem;
+                        display: inline-block;
+                        animation: loading 3s infinite forwards;
+                    }
+                }
+            }
+            button:active {
+                filter: brightness(1.1);
+            }
+        }
+    }
+
+    /*********************** footer部分 ***********************/
+    footer {
+        width: 86%;
+        margin: 20px auto;
+        display: flex;
+        flex-direction: column;
+
+        --color: #eee;
+
+        .contact-tips {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+
+            .line {
+                flex: 1;
+                height: 1px;
+                flex-basis: 30px;
+                background-color: var(--color, #ccc);
+            }
+            .tip-title {
+                color: var(--color, #ccc);
+                margin: 0 10px;
+            }
+        }
+        p {
+            color: var(--color, #ccc);
+            text-align: center;
+        }
+    }
 }
 .icon-box {
     display: inline-block;
     --width: 23px;
     width: var(--width, 27px);
     height: var(--width, 27px);
+    .icon {
+        width: 100%;
+        height: 100%;
+    }
 }
-.icon {
-    width: 100%;
-    height: 100%;
-}
-.input-box input {
-    font-size: 1rem;
-    flex-grow: 1;
-    border: none;
-    outline: none;
-}
-input:hover {
-    border: none;
-    outline: none;
-}
-.option-box {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.button-box button {
-    width: 100%;
-    height: 100%;
-    border: none;
-    background-color: #70b0bc;
-    color: white;
-    border-radius: 8px;
-    font-size: 1.2rem;
-}
-button:active {
-    filter: brightness(1.1);
-}
-button span {
-    display: none;
-    overflow: hidden;
-}
-.logining {
-    width: 0rem;
-    display: inline-block;
-    animation: loading 3s infinite forwards;
+@media screen and (min-width: 450px) {
+    .wrapper {
+        margin: auto;
+        width: 450px;
+    }
 }
 @keyframes loading {
     0% {
@@ -250,36 +284,5 @@ button span {
     100% {
         width: 0rem;
     }
-}
-
-/*********************** footer部分 ***********************/
-footer {
-    width: 86%;
-    margin: 20px auto;
-    display: flex;
-    flex-direction: column;
-
-    --color: #eee;
-}
-
-.contact-tips {
-    margin: 10px 0;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-}
-.contact-tips .line {
-    flex: 1;
-    height: 1px;
-    flex-basis: 30px;
-    background-color: var(--color, #ccc);
-}
-.contact-tips .tip-title {
-    color: var(--color, #ccc);
-    margin: 0 10px;
-}
-footer p {
-    color: var(--color, #ccc);
-    text-align: center;
 }
 </style>

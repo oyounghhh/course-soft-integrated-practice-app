@@ -137,17 +137,46 @@ function validate(users) {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .wrapper {
     --left: 10px;
     min-height: 100vh;
-}
-header {
-    height: 40px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    align-items: center;
-    justify-items: center;
+
+    h1 {
+        margin-top: 10px;
+        margin-left: var(--left);
+    }
+
+    form {
+        width: 100%;
+        padding: 15px;
+        padding-left: var(--left);
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        grid-auto-rows: minmax(30px, auto);
+        column-gap: 10px;
+        row-gap: 10px;
+        align-items: end;
+
+        input {
+            border: none;
+            border-bottom: 1px solid #ccc;
+        }
+
+        #register {
+            grid-column: 1/3;
+            margin: 10px 20px;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            color: white;
+            font-size: 1rem;
+            background-color: #70b0bc;
+        }
+        #register:active {
+            filter: brightness(1.1);
+        }
+    }
 }
 
 @media screen and (min-width: 450px) {
@@ -155,56 +184,5 @@ header {
         width: 450px;
         margin: auto;
     }
-}
-
-header .back {
-    margin: 0 10px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    justify-self: start;
-}
-header .title {
-    font-size: 1.2rem;
-}
-
-h1 {
-    margin-top: 10px;
-    margin-left: var(--left);
-}
-
-/* 内容 */
-form {
-    width: 100%;
-    padding: 15px;
-    padding-left: var(--left);
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    grid-auto-rows: minmax(30px, auto);
-    column-gap: 10px;
-    row-gap: 10px;
-    align-items: end;
-}
-
-form input {
-    border: none;
-    border-bottom: 1px solid #ccc;
-}
-.line {
-    grid-column: 1/3;
-    height: 1px;
-    background-color: #ccc;
-}
-#register {
-    grid-column: 1/3;
-    margin: 10px 20px;
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    color: white;
-    font-size: 1rem;
-    background-color: #70b0bc;
-}
-#register:active {
-    filter: brightness(1.1);
 }
 </style>

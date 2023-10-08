@@ -72,61 +72,66 @@ function logout() {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 h1 {
     text-align: center;
     font-size: 1.3rem;
     margin: 10px 0;
 }
 
-.info-box {
-    padding: 10px 20px;
-    background: linear-gradient(135deg, #74b263, #02a6c9);
-}
-.info-box .content {
-    height: 100px;
-    display: flex;
-    align-items: center;
-}
-.avatarImg {
-    margin-right: 20px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-}
+section {
+    .info-box {
+        padding: 10px 20px;
+        background: linear-gradient(135deg, #74b263, #02a6c9);
 
-.user-info p {
-    color: white;
-    margin: 5px 0;
-}
-.user-info p:nth-of-type(1) {
-    font-size: 1.1rem;
-}
-.user-info p:not(:nth-of-type(1)) {
-    font-size: 0.9rem;
-    color: aliceblue;
-}
+        .content {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            .avatarImg {
+                margin-right: 20px;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+            .user-info {
+                p {
+                    color: white;
+                    margin: 5px 0;
+                    &:nth-of-type(1) {
+                        font-size: 1.1rem;
+                    }
+                    &:not(:nth-of-type(1)) {
+                        font-size: 0.9rem;
+                        color: aliceblue;
+                    }
+                }
+            }
+        }
+    }
 
-/* ------------------------ */
-.options-li:not(:last-of-type) {
-    border-bottom: 1px solid #eee;
-}
+    .options-box {
+        .options-li {
+            &:not(:last-of-type) {
+                border-bottom: 1px solid #eee;
+            }
+            .options-item {
+                color: black;
+                font-size: 1rem;
+                background-color: transparent;
 
-.options-item {
-    color: black;
-    font-size: 1rem;
-    background-color: transparent;
-
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.logout {
-    border: none;
-    width: 100%;
-    height: 100%;
+                padding: 10px 20px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                &.logout {
+                    border: none;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
 }
 </style>
