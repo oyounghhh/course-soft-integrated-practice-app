@@ -6,6 +6,7 @@
             v-for="hospital of hospitals"
             :key="hospital.hpId"
             class="hospital-item"
+            @click="(evt) => toHospital(evt, hospital.hpId)"
         >
             <div class="grid-top">
                 <h2 class="title">
@@ -39,11 +40,11 @@
                 </p>
             </div>
             <div class="grid-bottom hospital-other">
-                <button class="item">
+                <button class="item" @click.stop>
                     <IconBox width="20px"> <SvgContact /> </IconBox>
                     <span>联系我们</span>
                 </button>
-                <button class="item">
+                <button class="item" @click.stop>
                     <IconBox width="20px"> <SvgAddress /> </IconBox>
                     <span>查找位置</span>
                 </button>
@@ -53,6 +54,8 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
+
 import IconBox from '@/components/IconBox.vue'
 import ViewHeader from '@/components/ViewHeader.vue'
 import SvgEnter from '@/assets/svg/enter.svg'
@@ -61,6 +64,8 @@ import SvgAddress from '@/assets/svg/address.svg'
 
 import hospitalImg1 from '@/assets/img/hospital1.png'
 import hospitalImg2 from '@/assets/img/hospital2.png'
+
+const router = useRouter()
 
 const hospitals = [
     {
@@ -82,6 +87,12 @@ const hospitals = [
         address: 'xx路xx街道xx楼xx号xx',
     },
 ]
+
+///////////////////////////////////
+
+function toHospital(evt, id) {
+    router.push(`/select-package/${id}`)
+}
 </script>
 
 <style scoped lang="scss">

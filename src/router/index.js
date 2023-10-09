@@ -46,6 +46,12 @@ const routes = [
             import('@/views/subView/appointment/SelectHospital.vue'),
     },
     {
+        path: '/select-package/:id',
+        name: 'SelectPackage',
+        component: () =>
+            import('@/views/subView/appointment/SelectPackage.vue'),
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: () => import('@/views/404.vue'),
