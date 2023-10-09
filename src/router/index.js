@@ -24,6 +24,16 @@ const routes = [
         component: () => import('@/views/Personal.vue'),
     },
     {
+        path: '/health-record',
+        name: 'HealthRecord',
+        component: () => import('@/views/subView/HealthRecord.vue'),
+    },
+    {
+        path: '/detail-record/:id',
+        name: 'DetailRecord',
+        component: () => import('@/views/subView/DetailRecord.vue'),
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: () => import('@/views/404.vue'),

@@ -34,7 +34,9 @@
             <div class="content report-physical">
                 <p>
                     <span> 随时随地查看体检报告 </span>
-                    <button>立即查看</button>
+                    <button>
+                        <router-link to="/health-record">立即查看</router-link>
+                    </button>
                 </p>
             </div>
         </div>
@@ -167,6 +169,8 @@ const healthConsult = [
         intro: '日常需注意什么？',
     },
 ]
+
+////////////////////////////////////////////////////////
 </script>
 
 <style scoped lang="scss">
@@ -259,7 +263,9 @@ main {
                 padding: 4px 8px;
                 background-color: #127a90;
                 border-radius: 4px;
-                color: whitesmoke;
+                a {
+                    color: whitesmoke;
+                }
                 &:active {
                     filter: brightness(1.1);
                 }
