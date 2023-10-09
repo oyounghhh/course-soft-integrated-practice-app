@@ -57,6 +57,12 @@ const routes = [
         component: () => import('@/views/subView/appointment/SelectDate.vue'),
     },
     {
+        path: '/appointment-success',
+        name: 'AppointmentSuccess',
+        component: () =>
+            import('@/views/subView/appointment/AppointmentSuccess.vue'),
+    },
+    {
         path: '/confirm-order',
         name: 'ConfirmOrder',
         component: () => import('@/views/subView/ConfirmOrder.vue'),

@@ -10,21 +10,28 @@
         <p>
             实付款 <span>￥{{ totalAmount }}</span>
         </p>
-        <button>确认支付</button>
+        <button @click="pay">确认支付</button>
     </div>
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import ViewHeader from '@/components/ViewHeader.vue'
 
 const route = useRoute()
+const router = useRouter()
 
 const { hospitalId, packageId, examYear, examMonth, examDay, isShowPayment } =
     route.query
 const totalAmount = 350
 const title = `医院${hospitalId}-套餐${packageId}-确认订单`
+
+//------------------------------ events ------------------------------
+
+function pay() {
+    router.push('/appointment-success')
+}
 </script>
 
 <style scoped lang="scss">
