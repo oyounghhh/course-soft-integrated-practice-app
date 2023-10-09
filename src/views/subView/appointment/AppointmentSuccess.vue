@@ -12,7 +12,9 @@
             <p>请体检用户携带本人身份证到店认证</p>
         </div>
         <button class="a-text font-bold" @click="routeOrder">查看订单</button>
-        <button class="a-button">继续为家人预约</button>
+        <button class="a-button" @click="routeSelectHospital">
+            继续为家人预约
+        </button>
         <div class="info">
             <p class="font-color-not-main">您的信息已经发送至体检机构</p>
             <p class="font-color-not-main">预约成功后会发送短信至您的手机</p>
@@ -40,6 +42,12 @@ function routeOrder() {
             examDay: 10,
             isShowPayment: false,
         },
+    })
+}
+
+function routeSelectHospital() {
+    router.push({
+        name: 'SelectHospital',
     })
 }
 </script>

@@ -5,10 +5,10 @@
             <img :src="coverImg" alt="预约封面" />
         </div>
         <nav>
-            <div @click="bookSelf">
+            <div @click="routeSelectHospital">
                 <img :src="selfAppointmentImg" alt="本人预约" />
             </div>
-            <div>
+            <div @click="routeSelectHospital">
                 <img :src="familyAppointmentImg" alt="家属预约" />
             </div>
         </nav>
@@ -25,7 +25,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-function bookSelf() {
+function routeSelectHospital() {
     router.push('/select-hospital')
 }
 </script>
