@@ -1,11 +1,18 @@
 <template>
     <header>
-        <button @click="back" class="back">&lt;</button>
-        <span class="title">{{ props.title }}</span>
+        <button @click="back" class="back">
+            <IconBox>
+                <SvgBack />
+            </IconBox>
+        </button>
+        <p class="title">{{ props.title }}</p>
     </header>
 </template>
 
 <script setup>
+import IconBox from '@/components/IconBox.vue'
+import SvgBack from '@/assets/svg/back.svg'
+
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -22,21 +29,30 @@ function back() {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 header {
-    height: 40px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    padding: 10px;
+    display: flex;
     align-items: center;
-    justify-items: center;
-}
-header .back {
-    margin: 0 10px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    justify-self: start;
-}
-header .title {
-    font-size: 1.2rem;
+
+    --back-width: 40px;
+
+    button {
+        margin: 0;
+        padding: 0;
+        background-color: transparent;
+        border: none;
+    }
+    .back {
+        flex: 0 0 auto;
+        width: var(--back-width);
+        margin: 0 10px;
+    }
+    .title {
+        flex: 1 0 auto;
+        font-size: 1.2rem;
+        padding-right: var(--back-width);
+        text-align: center;
+    }
 }
 </style>
