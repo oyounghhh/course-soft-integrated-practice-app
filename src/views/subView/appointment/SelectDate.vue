@@ -33,10 +33,17 @@ const { hospitalId, packageId } = route.query
 const title = `医院${hospitalId}-套餐${packageId}-选择体检日期`
 
 function toNext() {
-    console.log(dateSelected.year)
-    console.log(dateSelected.month)
-    console.log(dateSelected.day)
-    console.log('下一步 confirmOrder')
+    router.push({
+        path: '/confirm-order',
+        query: {
+            hospitalId,
+            packageId,
+            examYear: dateSelected.year,
+            examMonth: dateSelected.month,
+            examDay: dateSelected.day,
+            isShowPayment: true,
+        },
+    })
 }
 
 function selectDate(year, month, day) {
