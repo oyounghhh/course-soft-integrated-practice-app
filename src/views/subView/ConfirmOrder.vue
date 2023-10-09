@@ -6,7 +6,7 @@
             {{ `${examYear}年${examMonth}月${examDay}日` }}
         </div>
     </main>
-    <div v-if="isShowPayment" class="payment">
+    <div v-if="isShowPayment === 'true'" class="payment">
         <p>
             实付款 <span>￥{{ totalAmount }}</span>
         </p>

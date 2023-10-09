@@ -11,7 +11,7 @@
             <h1>恭喜预约成功！</h1>
             <p>请体检用户携带本人身份证到店认证</p>
         </div>
-        <button class="a-text font-bold">查看订单</button>
+        <button class="a-text font-bold" @click="routeOrder">查看订单</button>
         <button class="a-button">继续为家人预约</button>
         <div class="info">
             <p class="font-color-not-main">您的信息已经发送至体检机构</p>
@@ -25,6 +25,23 @@
 import ViewHeader from '@/components/ViewHeader.vue'
 import IconBox from '@/components/IconBox.vue'
 import SvgSuccess from '@/assets/svg/success.svg'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+function routeOrder() {
+    router.push({
+        name: 'ConfirmOrder',
+        query: {
+            hospitalId: 1,
+            packageId: 1,
+            examYear: 2023,
+            examMonth: 9,
+            examDay: 10,
+            isShowPayment: false,
+        },
+    })
+}
 </script>
 
 <style scoped lang="scss">
