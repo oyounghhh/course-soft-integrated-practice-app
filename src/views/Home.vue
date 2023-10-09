@@ -18,12 +18,14 @@
         </div>
         <nav>
             <ul class="menu-ul">
-                <li v-for="menu of menus" class="menu-li">
-                    <img :src="menu.img" :alt="menu.title" />
-                    <p>
-                        <span>{{ menu.title }}</span>
-                        <span>{{ menu.info }}</span>
-                    </p>
+                <li v-for="menu of menus">
+                    <router-link :to="menu.toRouter" class="menu-li">
+                        <img :src="menu.img" :alt="menu.title" />
+                        <p>
+                            <span>{{ menu.title }}</span>
+                            <span>{{ menu.info }}</span>
+                        </p>
+                    </router-link>
                 </li>
             </ul>
         </nav>
@@ -129,12 +131,42 @@ import doctorPortrait7 from '@/assets/img/doctor7.jpg'
 import doctorPortrait8 from '@/assets/img/doctor8.jpg'
 
 const menus = [
-    { title: '免费咨询', info: '新兴冠状病毒肺炎', img: menuImg01 },
-    { title: '网络问诊', info: '图文视频网络咨询', img: menuImg02 },
-    { title: 'e心门诊', info: '复旦医科大学专家', img: menuImg03 },
-    { title: '慢病管理', info: '血压血糖健康管理', img: menuImg04 },
-    { title: '上门护理', info: '网上购买上门服务', img: menuImg05 },
-    { title: '团检预约', info: '团体体检套餐定制', img: menuImg06 },
+    {
+        title: '免费咨询',
+        info: '新兴冠状病毒肺炎',
+        img: menuImg01,
+        toRouter: '/',
+    },
+    {
+        title: '网络问诊',
+        info: '图文视频网络咨询',
+        img: menuImg02,
+        toRouter: '/',
+    },
+    {
+        title: 'e心门诊',
+        info: '复旦医科大学专家',
+        img: menuImg03,
+        toRouter: '/',
+    },
+    {
+        title: '慢病管理',
+        info: '血压血糖健康管理',
+        img: menuImg04,
+        toRouter: '/',
+    },
+    {
+        title: '上门护理',
+        info: '网上购买上门服务',
+        img: menuImg05,
+        toRouter: '/',
+    },
+    {
+        title: '团检预约',
+        info: '团体体检套餐定制',
+        img: menuImg06,
+        toRouter: '/user-appointment',
+    },
 ]
 
 const doctorRecommend = [
