@@ -2,7 +2,11 @@
     <ViewHeader :title="title"></ViewHeader>
 
     <main>
-        <div class="package" v-for="pack of packages">
+        <div
+            class="package"
+            v-for="pack of packages"
+            @click="(evt) => toSelectData(evt, pack.smId)"
+        >
             <div class="package-info">
                 <p class="font-bold">{{ pack.type }}</p>
                 <p class="font-color-not-main">{{ pack.name }}</p>
@@ -10,7 +14,7 @@
             <div class="package-defail-toggle">
                 <button
                     class="flex-level-center"
-                    @click="pack.isShow = !pack.isShow"
+                    @click.stop="pack.isShow = !pack.isShow"
                 >
                     <span>详细</span>
                     <IconBox width="20px">
@@ -18,7 +22,11 @@
                     </IconBox>
                 </button>
             </div>
-            <table class="package-defail-contnet" v-show="pack.isShow">
+            <table
+                @click.stop
+                class="package-defail-contnet"
+                v-show="pack.isShow"
+            >
                 <thead>
                     <tr>
                         <th>检查项目</th>
@@ -43,7 +51,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import ViewHeader from '@/components/ViewHeader.vue'
 import IconBox from '@/components/IconBox.vue'
@@ -117,8 +125,13 @@ const packages = ref([
 //////////////////////////////////
 
 const route = useRoute()
+const router = useRouter()
+const hospitalId = route.params.id
+const title = `医院${hospitalId} - 选择体检套餐`
 
-const title = `医院${route.params.id} - 选择体检套餐`
+function toSelectData(evt, packageId) {
+    router.push({ path: '/select-date', query: { hospitalId, packageId } })
+}
 </script>
 
 <style scoped lang="scss">

@@ -52,6 +52,11 @@ const routes = [
             import('@/views/subView/appointment/SelectPackage.vue'),
     },
     {
+        path: '/select-date',
+        name: 'SelectDate',
+        component: () => import('@/views/subView/appointment/SelectDate.vue'),
+    },
+    {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: () => import('@/views/404.vue'),
