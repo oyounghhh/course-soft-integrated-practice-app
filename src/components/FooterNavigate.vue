@@ -64,14 +64,15 @@ const curRouterName = router.currentRoute.value.name
 <style scoped lang="scss">
 /*********************** footer ***********************/
 footer {
-    width: 100%;
+    width: var(--app-width, 100%);
     height: 55px;
     box-sizing: border-box;
     border-top: solid 1px #e9e9e9;
     background-color: #fff;
 
     position: fixed;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     bottom: 0;
 }
 footer nav {
