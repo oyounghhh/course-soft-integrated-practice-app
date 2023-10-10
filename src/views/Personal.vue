@@ -89,6 +89,7 @@ h1 {
 }
 
 section {
+    padding-bottom: 200px;
     .info-box {
         padding: 10px 20px;
         background: linear-gradient(135deg, #74b263, #02a6c9);

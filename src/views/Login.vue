@@ -120,7 +120,7 @@ function validLoginInfo(loginInfo) {
 /*********************** 总容器 ***********************/
 .wrapper {
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     background-image: linear-gradient(45deg, #266c9f, #266c9f, #7eb059);
     overflow: hidden;
 
