@@ -58,7 +58,7 @@ import { ref } from 'vue'
 import { setSessionStorage } from '@/utils/storage'
 
 const menus = [
-    { routeTo: '/personal', title: '我的预约', icon: SvgAppointment },
+    { routeTo: '/my-appointment', title: '我的预约', icon: SvgAppointment },
     { routeTo: '/personal', title: '我的服务', icon: SvgService },
     { routeTo: '/personal', title: '我的医生', icon: SvgDoctor },
     { routeTo: '/personal', title: '问诊订单', icon: SvgBill },
