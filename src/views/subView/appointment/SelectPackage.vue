@@ -1,14 +1,14 @@
 <template>
-    <ViewHeader :title="title"></ViewHeader>
+    <ViewHeader title="选择体检套餐"></ViewHeader>
 
-    <main>
+    <main v-if="isShowAllSetmealRef">
         <div
             class="package"
             v-for="pack of packages"
             @click="(evt) => toSelectData(evt, pack.smId)"
         >
             <div class="package-info">
-                <p class="font-bold">{{ pack.type }}</p>
+                <p class="font-bold">{{ packTypeMapping(pack.type) }}</p>
                 <p class="font-color-not-main">{{ pack.name }}</p>
             </div>
             <div class="package-defail-toggle">
@@ -39,9 +39,9 @@
                         v-for="packDetail in pack.sdList"
                         :key="packDetail.sdId"
                     >
-                        <td>{{ packDetail.ciName }}</td>
-                        <td>{{ packDetail.ciContent }}</td>
-                        <td>{{ packDetail.meaning }}</td>
+                        <td>{{ packDetail.checkItem.ciName }}</td>
+                        <td>{{ packDetail.checkItem.ciContent }}</td>
+                        <td>{{ packDetail.checkItem.meaning }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -50,87 +50,46 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+
+import requestArrSetmeal from '@/request/setmeal/arrSetmeal'
 
 import ViewHeader from '@/components/ViewHeader.vue'
 import IconBox from '@/components/IconBox.vue'
 import SvgPullDown from '@/assets/svg/pull-down.svg'
 
-const MAN = 1
+const isShowAllSetmealRef = ref(false)
+const packages = ref([])
 
-const packages = ref([
-    {
-        smId: '1',
-        type: 1 === MAN ? '男士套餐' : '女士套餐',
-        name: '普通男士客户 - 基础套餐',
-        isShow: false,
-        sdList: [
-            {
-                sdId: '1',
-                ciName: '名称xxx',
-                ciContent: '内容xxxxx',
-                meaning: '含义xxxxx',
-            },
-            {
-                sdId: '2',
-                ciName: '名称xxx2',
-                ciContent: '内容xxxxx2',
-                meaning: '含义xxxxx2',
-            },
-        ],
-    },
-    {
-        smId: '2',
-        type: 1 === MAN ? '男士套餐' : '女士套餐',
-        name: '普通男士客户 - 脑血管系统',
-        isShow: false,
-        sdList: [
-            {
-                sdId: '1',
-                ciName: '名称xxx',
-                ciContent: '内容xxxxx',
-                meaning: '含义xxxxx',
-            },
-            {
-                sdId: '2',
-                ciName: '名称xxx2',
-                ciContent: '内容xxxxx2',
-                meaning: '含义xxxxx2',
-            },
-        ],
-    },
-    {
-        smId: '3',
-        type: 1 === MAN ? '男士套餐' : '女士套餐',
-        name: '普通男士客户 - 肝病检查',
-        isShow: false,
-        sdList: [
-            {
-                sdId: '1',
-                ciName: '名称xxx',
-                ciContent: '内容xxxxx',
-                meaning: '含义xxxxx',
-            },
-            {
-                sdId: '2',
-                ciName: '名称xxx2',
-                ciContent: '内容xxxxx2',
-                meaning: '含义xxxxx2',
-            },
-        ],
-    },
-])
+const packTypeMapping = (idSymbol) =>
+    (['女士', '男士'][idSymbol] || '未知') + '套餐'
 
 //////////////////////////////////
 
 const route = useRoute()
 const router = useRouter()
 const hospitalId = route.params.id
-const title = `医院${hospitalId} - 选择体检套餐`
 
 function toSelectData(evt, packageId) {
     router.push({ path: '/select-date', query: { hospitalId, packageId } })
+}
+
+//------------------------------ life cycle ------------------------------
+
+onBeforeMount(async () => {
+    await getAllSetmeal()
+    isShowAllSetmealRef.value = true
+})
+
+//------------------------------ fetch data ------------------------------
+
+async function getAllSetmeal() {
+    const setmealArr = await requestArrSetmeal()
+    setmealArr.forEach((setmeal) => {
+        setmeal.isShow = false
+    })
+    packages.value = setmealArr
 }
 </script>
 
