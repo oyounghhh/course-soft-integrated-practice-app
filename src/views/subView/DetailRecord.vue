@@ -1,5 +1,5 @@
 <template>
-    <ViewHeader title="体检报告"></ViewHeader>
+    <ViewHeader :title="title"></ViewHeader>
 
     <nav class="nav">
         <div
@@ -107,9 +107,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import ViewHeader from '@/components/ViewHeader.vue'
+
+import requestOrdersById from '@/request/orders/requestOrdersById'
+import { formatChineseDate } from '@/utils/common'
+
+const title = ref('体检报告')
 
 const route = useRoute()
 const orderId = route.query.orderId
@@ -201,6 +206,18 @@ const detailRecordRef = ref([
 /////////////////////////////////////////
 function changeNavFlag(navFlag) {
     navFlagRef.value = navFlag
+}
+
+//------------------------------ life cycle ------------------------------
+onBeforeMount(async () => {
+    await getOrdersById(orderId)
+})
+
+//------------------------------ fetch data ------------------------------
+
+async function getOrdersById(orderId) {
+    const order = await requestOrdersById(orderId)
+    title.value = `${formatChineseDate(order.orderDate)} ${title.value}`
 }
 </script>
 
