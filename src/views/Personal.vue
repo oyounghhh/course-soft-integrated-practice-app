@@ -55,7 +55,7 @@ import SvgShopOrder from '@/assets/svg/shop-order.svg'
 
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
-import { setSessionStorage } from '@/utils/storage'
+import { setSessionStorage, removeSessionStorage } from '@/utils/storage'
 
 const menus = [
     { routeTo: '/my-appointment', title: '我的预约', icon: SvgAppointment },
@@ -75,6 +75,7 @@ const users = ref({
 function logout() {
     if (window.confirm('确定退出登录吗？')) {
         setSessionStorage('isLogin', false)
+        removeSessionStorage('user')
         router.push('/login')
         // TODO: 发送退出登录请求
     }

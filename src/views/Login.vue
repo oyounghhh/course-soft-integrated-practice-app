@@ -57,7 +57,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { requestPost } from '@/request/index'
+import requestLogin from '@/request/users/login'
 import { setSessionStorage } from '@/utils/storage'
 
 import IconBox from '@/components/IconBox.vue'
@@ -80,20 +80,18 @@ function login() {
     isLogining.value = true
     const phone = loginInfoRef.value.phone
     const password = loginInfoRef.value.password
-    requestPost('/login', {
-        phone,
-        password,
-    })
+    requestLogin({ userId: phone, password })
         .then((data) => {
-            if (data.status === 'OK') {
-                router.push('/')
+            if (data) {
                 setSessionStorage('isLogin', true)
+                setSessionStorage('user', data)
+                router.push('/')
             } else {
-                alert('登录错误')
+                alert('登录失败')
             }
         })
-        .catch((error) => {
-            alert(error.message)
+        .catch((err) => {
+            alert(err.message)
         })
         .finally(() => {
             isLogining.value = false

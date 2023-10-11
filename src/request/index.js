@@ -1,5 +1,20 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { BASE_URL } from '@/constants/request'
+
+axios.defaults.baseURL = BASE_URL
+
+export async function post(url, data) {
+    try {
+        const response = await axios.post(url, data)
+        return response.data
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            return error.response
+        }
+    }
+}
+
+//------------------------------ old ------------------------------
 
 function getUrl(path) {
     if (path[0] !== '/') {
