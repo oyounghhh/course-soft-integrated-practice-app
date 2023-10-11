@@ -1,9 +1,9 @@
 <template>
     <ViewHeader title="请选择体检机构"></ViewHeader>
 
-    <main>
+    <main v-if="isShowAllHospital">
         <div
-            v-for="hospital of hospitals"
+            v-for="hospital of hospitalArrRef"
             :key="hospital.hpId"
             class="hospital-item"
             @click="(evt) => toHospital(evt, hospital.hpId)"
@@ -54,6 +54,7 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import IconBox from '@/components/IconBox.vue'
@@ -62,36 +63,30 @@ import SvgEnter from '@/assets/svg/enter.svg'
 import SvgContact from '@/assets/svg/contact.svg'
 import SvgAddress from '@/assets/svg/address.svg'
 
-import hospitalImg1 from '@/assets/img/hospital1.png'
-import hospitalImg2 from '@/assets/img/hospital2.png'
+import requestAllHospital from '@/request/hospital/listHospital'
+import { onBeforeMount } from 'vue'
 
 const router = useRouter()
-
-const hospitals = [
-    {
-        hpId: '1',
-        name: '医院1',
-        picture: hospitalImg1,
-        businessHours: '周一至周五 7:30 - 15:30 （周六截止 12:00 ）',
-        deadline: '采血截至时间 10:30',
-        telephone: '40012341234',
-        address: 'xx路xx街道xx楼xx号xx',
-    },
-    {
-        hpId: '2',
-        name: '医院2',
-        picture: hospitalImg2,
-        businessHours: '周一至周五 7:30 - 15:30 （周六截止 12:00 ）',
-        deadline: '采血截至时间 10:30',
-        telephone: '40012341234',
-        address: 'xx路xx街道xx楼xx号xx',
-    },
-]
+const hospitalArrRef = ref([])
+const isShowAllHospital = ref(false)
 
 ///////////////////////////////////
 
 function toHospital(evt, id) {
     router.push(`/select-package/${id}`)
+}
+
+//------------------------------ life cycle ------------------------------
+onBeforeMount(async () => {
+    await getAllHospital()
+    isShowAllHospital.value = true
+})
+
+//------------------------------ fetch data ------------------------------
+
+async function getAllHospital() {
+    const hospitalArr = await requestAllHospital()
+    hospitalArrRef.value = hospitalArr
 }
 </script>
 
