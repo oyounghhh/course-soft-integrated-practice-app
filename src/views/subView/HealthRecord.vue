@@ -50,8 +50,13 @@ const userId = getSessionStorage('user')?.userId
 const orderArrRef = ref(null)
 const isShowRecordWrapper = ref(false)
 
-function toDetailRepord(evt, recordId) {
-    router.push(`/detail-record/${recordId}`)
+function toDetailRepord(evt, orderId) {
+    router.push({
+        name: 'DetailRecord',
+        query: {
+            orderId,
+        },
+    })
 }
 
 //------------------------------ life cycle ------------------------------

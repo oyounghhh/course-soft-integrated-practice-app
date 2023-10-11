@@ -1,5 +1,5 @@
 <template>
-    <ViewHeader :title="title"></ViewHeader>
+    <ViewHeader title="体检报告"></ViewHeader>
 
     <nav class="nav">
         <div
@@ -112,8 +112,7 @@ import { useRoute } from 'vue-router'
 import ViewHeader from '@/components/ViewHeader.vue'
 
 const route = useRoute()
-const id = route.params.id
-const title = `体检报告${id}`
+const orderId = route.query.orderId
 const SIMPLE_INFO = 'simpleInfo'
 
 const navFlagRef = ref('general')

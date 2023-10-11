@@ -29,7 +29,7 @@ const routes = [
         component: () => import('@/views/subView/HealthRecord.vue'),
     },
     {
-        path: '/detail-record/:id',
+        path: '/detail-record',
         name: 'DetailRecord',
         component: () => import('@/views/subView/DetailRecord.vue'),
     },
