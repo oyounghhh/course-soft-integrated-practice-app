@@ -22,7 +22,7 @@
         <template v-if="navFlagRef === 'general'">
             <div class="nav-content-item">
                 <div class="title">异常项</div>
-                <ul>
+                <ul v-if="isShowErrorListRef">
                     <li
                         v-for="item in generalRecordRef.errorCheckItemArr"
                         :key="item.cidrId"
@@ -41,7 +41,7 @@
             </div>
             <div class="nav-content-item">
                 <div class="title">一、尊敬的顾客，您本次体检结论如下：</div>
-                <ul>
+                <ul v-if="isShowOverallRef">
                     <li
                         v-for="(
                             item, index
@@ -123,87 +123,10 @@ const orderId = route.query.orderId
 const SIMPLE_INFO = 'simpleInfo'
 
 const navFlagRef = ref('general')
-
-const generalRecordRef = ref({
-    errorCheckItemArr: [
-        {
-            cidrId: '1',
-            name: '收缩压',
-            value: '149',
-            unit: '',
-            normalValueString: '< 140',
-        },
-        {
-            cidrId: '2',
-            name: '白细胞计数',
-            value: '3.56',
-            unit: '10^9/L',
-            normalValueString: '< 140',
-        },
-    ],
-    overallResultArr: [
-        {
-            orId: '1',
-            title: '超重',
-            content: '您的体重指标超重，体内脂肪过度',
-        },
-        {
-            orId: '2',
-            title: '血压增高',
-            content: '血压增高',
-        },
-        {
-            orId: '3',
-            title: '血压规异常',
-            content: '血压规异常',
-        },
-    ],
-})
-
-const detailRecordRef = ref([
-    {
-        cirId: '1',
-        ciName: '一般检测',
-        cidrList: [
-            {
-                cidrId: '1',
-                type: 4,
-                isError: 1,
-                name: '收缩压',
-                value: '149',
-                unit: '',
-                normalValueString: '< 140',
-            },
-            {
-                cidrId: '2',
-                type: 4,
-                isError: 0,
-                name: '舒张压',
-                value: '90',
-                unit: '',
-                normalValueString: '< 90',
-            },
-            {
-                cidrId: '3',
-                type: 4,
-                isError: 0,
-                name: '身高',
-                value: '177',
-                unit: 'cm',
-                normalValueString: '',
-            },
-            {
-                cidrId: '4',
-                type: 4,
-                isError: 0,
-                name: '体重',
-                value: '80',
-                unit: 'kg',
-                normalValueString: '',
-            },
-        ],
-    },
-])
+const isShowErrorListRef = ref(false)
+const isShowOverallRef = ref(false)
+const generalRecordRef = ref({})
+const detailRecordRef = ref()
 
 /////////////////////////////////////////
 function changeNavFlag(navFlag) {
@@ -214,7 +137,9 @@ function changeNavFlag(navFlag) {
 onBeforeMount(async () => {
     await getOrdersById(orderId)
     await getCiReports(orderId)
+    isShowErrorListRef.value = true
     await getOverallResult(orderId)
+    isShowOverallRef.value = true
 })
 
 //------------------------------ fetch data ------------------------------
