@@ -34,6 +34,7 @@ header {
     padding: 10px;
     display: flex;
     align-items: center;
+    border-bottom: 1px solid #ddd;
 
     --back-width: 40px;
 

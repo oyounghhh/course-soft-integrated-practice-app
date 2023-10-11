@@ -11,11 +11,11 @@
                 <p class="font-bold">{{ packTypeMapping(pack.type) }}</p>
                 <p class="font-color-not-main">{{ pack.name }}</p>
             </div>
-            <div class="package-defail-toggle">
-                <button
-                    class="flex-level-center"
-                    @click.stop="pack.isShow = !pack.isShow"
-                >
+            <div
+                class="package-defail-toggle"
+                @click.stop="pack.isShow = !pack.isShow"
+            >
+                <button class="flex-level-center">
                     <span>详细</span>
                     <IconBox width="20px">
                         <SvgPullDown />
@@ -104,19 +104,18 @@ main {
         grid-template-areas:
             'info   btn'
             'detail detail';
-        grid-template-columns: 1fr 70px;
+        grid-template-columns: 1fr 100px;
 
-        padding: 20px;
-        padding-left: 40px;
         margin: 20px 0;
 
         .package-info {
             grid-area: info;
+            padding: 10px;
         }
         .package-defail-toggle {
             grid-area: btn;
-            justify-self: center;
-            align-self: center;
+            width: 100%;
+            height: 100%;
         }
         .package-defail-contnet {
             grid-area: detail;
@@ -129,15 +128,16 @@ main {
 table.package-defail-contnet {
     border-collapse: collapse;
     table-layout: fixed;
+    margin: 20px;
 
     td,
     th {
         padding: 8px 4px;
-        text-align: left;
+        text-align: center;
+        min-width: 4.2rem;
     }
     thead tr {
-        border-top: 1px solid #ccc;
-        border-bottom-color: #ccc;
+        background: #ddd;
     }
     tr {
         border-bottom: 1px solid #eee;
@@ -151,10 +151,13 @@ main {
         border-radius: 10px;
         .package-info p {
             margin: 4px 0;
+            margin-left: 20px;
         }
         .package-defail-toggle {
-            padding-left: 10px;
             border-left: 1px solid #eee;
+            display: flex;
+            justify-content: center;
+            align-self: center;
             button {
                 border: none;
                 background-color: transparent;
