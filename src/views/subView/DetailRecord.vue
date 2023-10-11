@@ -113,6 +113,7 @@ import ViewHeader from '@/components/ViewHeader.vue'
 
 import requestOrdersById from '@/request/orders/requestOrdersById'
 import getCiReportByOrderId from '@/request/ciReport/getCiReportByOrderId'
+import requestOverallResultByOrderId from '@/request/overallResult/requestOverallResultByOrderId'
 import { formatChineseDate } from '@/utils/common'
 
 const title = ref('体检报告')
@@ -213,6 +214,7 @@ function changeNavFlag(navFlag) {
 onBeforeMount(async () => {
     await getOrdersById(orderId)
     await getCiReports(orderId)
+    await getOverallResult(orderId)
 })
 
 //------------------------------ fetch data ------------------------------
@@ -235,6 +237,11 @@ async function getCiReports(orderId) {
     })
     generalRecordRef.value.errorCheckItemArr = errorCheckItemArr
     detailRecordRef.value = ciReportArr
+}
+
+async function getOverallResult(orderId) {
+    const overallResultArr = await requestOverallResultByOrderId(orderId)
+    generalRecordRef.value.overallResultArr = overallResultArr
 }
 </script>
 

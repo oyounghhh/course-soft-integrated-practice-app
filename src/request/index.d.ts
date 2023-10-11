@@ -95,3 +95,10 @@ interface CiDetailedReport {
     ciId: number
     orderId: number
 }
+
+interface OverallResult {
+    orId: number
+    title: string
+    content: string
+    orderId: number
+}
