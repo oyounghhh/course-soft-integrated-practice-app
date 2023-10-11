@@ -8,7 +8,7 @@
                 type="number"
                 id="phone"
                 placeholder="请输入手机号码"
-                v-model="usersRef.phone"
+                v-model="usersRef.userId"
             />
             <!-- <span class="line"></span> -->
             <label class="label" for="realname">真实姓名</label>
@@ -28,16 +28,16 @@
                     type="radio"
                     name="gender"
                     id="man"
-                    value="man"
-                    v-model="usersRef.gender"
+                    value="1"
+                    v-model="usersRef.sex"
                 />
                 <label for="man"> 男 </label>
                 <input
                     type="radio"
                     name="gender"
                     id="woman"
-                    value="woman"
-                    v-model="usersRef.gender"
+                    value="0"
+                    v-model="usersRef.sex"
                 />
                 <label for="woman"> 女 </label>
             </div>
@@ -47,7 +47,7 @@
                 type="number"
                 id="user-id"
                 placeholder="请输入身份证号"
-                v-model="usersRef.userId"
+                v-model="usersRef.identityCard"
             />
             <!-- <span class="line"></span> -->
             <label class="label" for="password-first">密码</label>
@@ -78,17 +78,19 @@ import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import ViewHeader from '@/components/ViewHeader.vue'
 
+import requestRegister from '@/request/users/register'
+
 const router = useRouter()
 const wrapperEle = ref(null)
 
 const usersRef = ref({
-    phone: '',
-    realName: '',
-    birthday: '',
-    gender: '',
     userId: '',
     password: '',
     passwordAgain: '',
+    realName: '',
+    sex: 1,
+    identityCard: '',
+    birthday: '',
 })
 
 function register() {
@@ -96,40 +98,59 @@ function register() {
         return
     }
 
-    router.push('login')
+    const usersData = usersRef.value
+    usersData.identityCard = usersData.identityCard.toString()
+    usersData.userId = usersData.userId.toString()
+
+    requestRegister(usersData)
+        .then((data) => {
+            if (data > 0) {
+                // alert('注册成功')
+                router.push({
+                    name: 'Login',
+                })
+            } else {
+                alert('注册失败')
+            }
+        })
+        .catch((err) => {
+            alert(err.message)
+        })
 }
 
 function focusin() {
     wrapperEle.value.style.minHeight = `150vh`
 }
 function focusout() {
-    wrapperEle.value.style.minHeight = ''
+    if (wrapperEle.value) {
+        wrapperEle.value.style.minHeight = ''
+    }
 }
 
 /////////////////////////////////////
 
 function validate(users) {
-    if (users.userId == '') {
+    if (users.userId === '') {
         alert('手机号码不能为空！')
         return false
     }
-    if (users.realName == '') {
+    if (users.realName === '') {
         alert('真实姓名不能为空！')
         return false
     }
-    if (users.birthday == '') {
+    if (users.birthday === '') {
         alert('生日不能为空！')
         return false
     }
-    if (users.identityCard == '') {
+    if (users.identityCard === '') {
         alert('身份证号不能为空！')
         return false
     }
-    if (users.password == '') {
+    if (users.password === '') {
         alert('密码不能为空！')
         return false
     }
-    if (users.password != users.passwordAgain) {
+    if (users.password !== users.passwordAgain) {
         alert('两次输入密码不一致！')
         return false
     }
