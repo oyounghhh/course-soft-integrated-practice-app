@@ -3,6 +3,9 @@ interface OrdersMore extends Orders {
     hospital: Hospital
     setmeal: Setmeal
 }
+interface OrdersHospital extends Orders {
+    hospital: Hospital
+}
 
 interface Orders {
     orderDate: String
