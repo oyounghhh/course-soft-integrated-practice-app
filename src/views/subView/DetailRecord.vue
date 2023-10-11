@@ -14,7 +14,7 @@
             :class="{ active: navFlagRef === 'detailed' }"
             @click="changeNavFlag('detailed')"
         >
-            报告详情
+            报告详情 - 体检各项检测值
         </div>
     </nav>
 
@@ -112,6 +112,7 @@ import { useRoute } from 'vue-router'
 import ViewHeader from '@/components/ViewHeader.vue'
 
 import requestOrdersById from '@/request/orders/requestOrdersById'
+import getCiReportByOrderId from '@/request/ciReport/getCiReportByOrderId'
 import { formatChineseDate } from '@/utils/common'
 
 const title = ref('体检报告')
@@ -211,6 +212,7 @@ function changeNavFlag(navFlag) {
 //------------------------------ life cycle ------------------------------
 onBeforeMount(async () => {
     await getOrdersById(orderId)
+    await getCiReports(orderId)
 })
 
 //------------------------------ fetch data ------------------------------
@@ -218,6 +220,21 @@ onBeforeMount(async () => {
 async function getOrdersById(orderId) {
     const order = await requestOrdersById(orderId)
     title.value = `${formatChineseDate(order.orderDate)} ${title.value}`
+}
+
+async function getCiReports(orderId) {
+    const ciReportArr = await getCiReportByOrderId(orderId)
+    const errorCheckItemArr = []
+    // 提取异常项
+    ciReportArr.forEach((ciReport) => {
+        ciReport.cidrList.forEach((item) => {
+            if (item.isError) {
+                errorCheckItemArr.push(item)
+            }
+        })
+    })
+    generalRecordRef.value.errorCheckItemArr = errorCheckItemArr
+    detailRecordRef.value = ciReportArr
 }
 </script>
 
