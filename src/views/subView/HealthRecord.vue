@@ -41,7 +41,7 @@ import recordCoverImg from '@/assets/img/report.png'
 
 const router = useRouter()
 
-import requestOrdersById from '@/request/orders/requestOrdersById'
+import requestOrdersByUserId from '@/request/orders/requestOrdersByUserId'
 import { onBeforeMount, ref } from 'vue'
 import { getSessionStorage } from '@/utils/storage'
 
@@ -71,7 +71,7 @@ onBeforeMount(async () => {
 
 //------------------------------ fetch data ------------------------------
 async function getOrdersById(userId) {
-    const orderArr = await requestOrdersById({ userId })
+    const orderArr = await requestOrdersByUserId({ userId })
     console.log(orderArr)
     orderArrRef.value = orderArr
 }
@@ -120,3 +120,4 @@ function toLocalDate(dateStr) {
     fill: #abdae2;
 }
 </style>
+@/request/orders/requestOrdersByUserId

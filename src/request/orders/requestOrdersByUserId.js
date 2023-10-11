@@ -22,7 +22,7 @@ function getOrdersArr(userId) {
  * @param {{userId:string}} data
  * @returns {Promise<Array<OrdersHospital>>}
  */
-export default async function requestOrdersById(data) {
+export default async function requestOrdersByUserId(data) {
     const orders = await getOrdersArr(data.userId)
     const promiseArr = []
     orders.forEach((order) => {
