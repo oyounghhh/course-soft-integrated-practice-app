@@ -79,6 +79,7 @@ import { ref } from 'vue'
 import ViewHeader from '@/components/ViewHeader.vue'
 
 import requestRegister from '@/request/users/register'
+import requestUserInfo from '@/request/users/userInfo'
 
 const router = useRouter()
 const wrapperEle = ref(null)
@@ -93,7 +94,7 @@ const usersRef = ref({
     birthday: '',
 })
 
-function register() {
+async function register() {
     if (!validate(usersRef.value)) {
         return
     }
@@ -102,20 +103,22 @@ function register() {
     usersData.identityCard = usersData.identityCard.toString()
     usersData.userId = usersData.userId.toString()
 
-    requestRegister(usersData)
-        .then((data) => {
-            if (data > 0) {
-                // alert('注册成功')
-                router.push({
-                    name: 'Login',
-                })
-            } else {
-                alert('注册失败')
-            }
-        })
-        .catch((err) => {
-            alert(err.message)
-        })
+    try {
+        const isHad = await requestUserInfo({ userId: usersData.userId })
+        if (isHad) {
+            alert('该手机号码已注册')
+            return
+        }
+        const isSucceed = await requestRegister(usersData)
+        if (isSucceed > 0) {
+            alert('注册成功')
+            router.push({ name: 'Login' })
+        } else {
+            alert('注册失败')
+        }
+    } catch (err) {
+        alert(err.message)
+    }
 }
 
 function focusin() {
