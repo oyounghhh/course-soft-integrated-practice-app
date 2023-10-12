@@ -58,9 +58,11 @@ import requestArrSetmeal from '@/request/setmeal/arrSetmeal'
 import ViewHeader from '@/components/ViewHeader.vue'
 import IconBox from '@/components/IconBox.vue'
 import SvgPullDown from '@/assets/svg/pull-down.svg'
+import { getSessionStorage } from '@/utils/storage'
 
 const isShowAllSetmealRef = ref(false)
 const packages = ref([])
+const user = getSessionStorage('user')
 
 const packTypeMapping = (idSymbol) =>
     (['女士', '男士'][idSymbol] || '未知') + '套餐'
@@ -88,7 +90,8 @@ onBeforeMount(async () => {
 //------------------------------ fetch data ------------------------------
 
 async function getAllSetmeal() {
-    const setmealArr = await requestArrSetmeal()
+    const gender = user.sex
+    const setmealArr = await requestArrSetmeal(gender)
     setmealArr.forEach((setmeal) => {
         setmeal.isShow = false
     })
