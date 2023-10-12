@@ -33,6 +33,7 @@ import requestHospital from '@/request/hospital/requestHospital'
 import { onBeforeMount } from 'vue'
 import requestSetmeal from '@/request/setmeal/requestSetmeal'
 import { getSessionStorage } from '@/utils/storage'
+import saveOrder from '@/request/orders/saveOrder'
 
 const route = useRoute()
 const router = useRouter()
@@ -84,10 +85,26 @@ const dataShow = reactive([
         ],
     },
 ])
-//------------------------------ events ------------------------------
+
+//------------------------------ btn events ------------------------------
 
 function pay() {
-    router.push('/appointment-success')
+    saveOrder({
+        hpId,
+        orderDate: dateSelected,
+        smId,
+        userId: users.userId,
+    })
+        .then((data) => {
+            if (data > 0) {
+                router.push('/appointment-success')
+            } else {
+                alert('保存失败')
+            }
+        })
+        .catch((err) => {
+            console.log(err.messsage)
+        })
 }
 
 //------------------------------ life cycle ------------------------------

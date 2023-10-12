@@ -1,16 +1,16 @@
 <template>
     <ViewHeader title="我的预约"></ViewHeader>
-    <main>
+    <main v-if="isShowOrders">
         <div
             v-for="item of appointments"
             class="appointment-item"
-            @click="routeConfirmOrder"
+            @click="routeConfirmOrder(item.hpId, item.smId, item.orderDate)"
         >
             <div class="info">
                 <p>{{ item.orderDate }}</p>
-                <p>{{ item.packageName }}</p>
+                <p>{{ item.setmeal.name }}</p>
             </div>
-            <div class="btn-box" @click.stop>
+            <div class="btn-box" @click.stop="cancelOrder">
                 <button>取消预约</button>
             </div>
         </div>
@@ -19,29 +19,59 @@
 
 <script setup>
 import ViewHeader from '@/components/ViewHeader.vue'
+import { requestOrdersSetmealByUserId } from '@/request/orders/requestOrdersByUserId'
+import requestCancelOrder from '@/request/orders/cancelOrder'
+import { getSessionStorage } from '@/utils/storage'
+import { onBeforeMount, ref } from 'vue'
 
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const user = getSessionStorage('user')
+const userId = user.userId
 
-function routeConfirmOrder() {
+const appointments = ref([])
+const isShowOrders = ref(false)
+
+//------------------------------ router ------------------------------
+
+function routeConfirmOrder(hpId, smId, dateSelected) {
     router.push({
         name: 'ConfirmOrder',
+        query: { hpId, smId, dateSelected },
     })
 }
 
-const appointments = [
-    {
-        orderId: '1',
-        orderDate: '2021-11-22',
-        packageName: '普通男士客户-基础套餐',
-    },
-    {
-        orderId: '2',
-        orderDate: '2021-12-22',
-        packageName: '普通男士客户-脑血管系统',
-    },
-]
+//------------------------------ life cycle ------------------------------
+onBeforeMount(() => {
+    getAllOrdersByUserId(userId)
+})
+
+//------------------------------ fetch data ------------------------------
+
+async function getAllOrdersByUserId(userId) {
+    isShowOrders.value = false
+    const orders = await requestOrdersSetmealByUserId(userId)
+    appointments.value = orders
+    isShowOrders.value = true
+}
+
+//------------------------------ btn event ------------------------------
+
+async function cancelOrder(orderId) {
+    if (!confirm('确定删除订单？')) {
+        return
+    }
+    try {
+        const isSucceed = await requestCancelOrder(orderId)
+        if (!isSucceed) {
+            alert('删除失败')
+        }
+        getAllOrdersByUserId(userId)
+    } catch (error) {
+        alert(error.message)
+    }
+}
 </script>
 
 <style scoped lang="scss">
