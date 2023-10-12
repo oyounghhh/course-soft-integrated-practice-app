@@ -10,7 +10,7 @@
                 <p>{{ item.orderDate }}</p>
                 <p>{{ item.setmeal.name }}</p>
             </div>
-            <div class="btn-box" @click.stop>
+            <div class="btn-box" @click.stop="cancelOrder">
                 <button>取消预约</button>
             </div>
         </div>
@@ -20,6 +20,7 @@
 <script setup>
 import ViewHeader from '@/components/ViewHeader.vue'
 import { requestOrdersSetmealByUserId } from '@/request/orders/requestOrdersByUserId'
+import requestCancelOrder from '@/request/orders/cancelOrder'
 import { getSessionStorage } from '@/utils/storage'
 import { onBeforeMount, ref } from 'vue'
 
@@ -42,16 +43,34 @@ function routeConfirmOrder(hpId, smId, dateSelected) {
 }
 
 //------------------------------ life cycle ------------------------------
-onBeforeMount(async () => {
-    await getAllOrdersByUserId(userId)
-    isShowOrders.value = true
+onBeforeMount(() => {
+    getAllOrdersByUserId(userId)
 })
 
 //------------------------------ fetch data ------------------------------
 
 async function getAllOrdersByUserId(userId) {
+    isShowOrders.value = false
     const orders = await requestOrdersSetmealByUserId(userId)
     appointments.value = orders
+    isShowOrders.value = true
+}
+
+//------------------------------ btn event ------------------------------
+
+async function cancelOrder(orderId) {
+    if (!confirm('确定删除订单？')) {
+        return
+    }
+    try {
+        const isSucceed = await requestCancelOrder(orderId)
+        if (!isSucceed) {
+            alert('删除失败')
+        }
+        getAllOrdersByUserId(userId)
+    } catch (error) {
+        alert(error.message)
+    }
 }
 </script>
 
