@@ -102,3 +102,16 @@ interface OverallResult {
     content: string
     orderId: number
 }
+
+interface CalendarRequestDto {
+    hpId: number
+    year: number
+    month: number
+}
+
+interface CalendarResponseDto {
+    ymd: string
+    total: number
+    existing: number
+    remainder: number
+}

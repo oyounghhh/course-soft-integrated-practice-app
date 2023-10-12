@@ -30,10 +30,9 @@ import ViewHeader from '@/components/ViewHeader.vue'
 const route = useRoute()
 const router = useRouter()
 
-const { hospitalId, packageId, examYear, examMonth, examDay, isShowPayment } =
-    route.query
+const { hpId, smId, dateSelected, isShowPayment } = route.query
 const totalAmount = 350
-const title = `医院${hospitalId}-套餐${packageId}-确认订单`
+const title = `确认订单`
 
 const users = {
     userId: '1',
@@ -42,7 +41,6 @@ const users = {
     identityCard: '123456xxxxxxxxx',
     birthday: '2001-10-10',
 }
-const dateSelected = '2023-10-10'
 const hospital = {
     name: 'xx医院',
     businessHours: '周一至周五',

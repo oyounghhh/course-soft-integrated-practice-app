@@ -72,7 +72,10 @@ const router = useRouter()
 const hospitalId = route.params.id
 
 function toSelectData(evt, packageId) {
-    router.push({ path: '/select-date', query: { hospitalId, packageId } })
+    router.push({
+        path: '/select-date',
+        query: { hpId: hospitalId, smId: packageId },
+    })
 }
 
 //------------------------------ life cycle ------------------------------
