@@ -138,6 +138,9 @@ table.package-defail-contnet {
         padding: 8px 4px;
         text-align: center;
         min-width: 4.2rem;
+        &:not(:last-of-type) {
+            border-right: 1px solid #eee;
+        }
     }
     thead tr {
         background: #ddd;

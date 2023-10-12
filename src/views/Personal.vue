@@ -55,7 +55,13 @@ import SvgShopOrder from '@/assets/svg/shop-order.svg'
 
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
-import { setSessionStorage, removeSessionStorage } from '@/utils/storage'
+import {
+    setSessionStorage,
+    removeSessionStorage,
+    getSessionStorage,
+} from '@/utils/storage'
+
+const userInfo = getSessionStorage('user')
 
 const menus = [
     { routeTo: '/my-appointment', title: '我的预约', icon: SvgAppointment },
@@ -67,8 +73,8 @@ const menus = [
 
 const router = useRouter()
 const users = ref({
-    realName: '某某某',
-    userId: '134*****1234',
+    realName: userInfo.realName,
+    userId: userInfo.userId.slice(0, 3) + '****' + userInfo.userId.slice(-2),
     avatarUrl: 'https://pic.imgdb.cn/item/6304358116f2c2beb15e9a9b.jpg',
 })
 

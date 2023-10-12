@@ -3,25 +3,25 @@
     <div class="cover">
         <img :src="recordCoverImg" alt="封面" />
     </div>
-    <ul v-if="isShowRecordWrapper">
+    <ul v-if="isShowRecordWrapper" class="gird-wrapper">
         <li
             v-for="record of orderArrRef"
             :key="record.orderId"
-            class="record-li"
+            class="record-li gird3"
             @click="(evt) => toDetailRepord(evt, record.orderId)"
         >
-            <div class="record-icon">
+            <div class="grid-item record-icon">
                 <IconBox width="60px" height="60px">
                     <SvgRecord />
                 </IconBox>
             </div>
-            <div class="intro">
+            <div class="grid-item intro">
                 <p>{{ toLocalDate(record.orderDate) }} - 体检报告</p>
                 <p>
                     {{ `${record.hospital.name} - ${record.hospital.address}` }}
                 </p>
             </div>
-            <div>
+            <div class="grid-item">
                 <IconBox>
                     <SvgEnter />
                 </IconBox>
@@ -94,30 +94,35 @@ function toLocalDate(dateStr) {
     }
 }
 
-.record-li {
-    box-sizing: border-box;
-    padding: 20px 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+.gird-wrapper {
+    padding: 20px;
+    .gird3 {
+        display: grid;
+        padding: 10px 0;
+        grid-template-columns: 70px 1fr 40px;
+        justify-items: center;
+        align-items: center;
 
-    &:not(:last-of-type) {
-        border-bottom: 1px solid #eee;
+        .grid-item:nth-of-type(2) {
+            justify-self: left;
+        }
     }
-
-    .intro p:nth-of-type(1) {
+}
+.record-li:not(:last-of-type) {
+    border-bottom: 1px solid #eee;
+}
+.intro {
+    p:nth-of-type(1) {
         font-size: 1.1rem;
         font-weight: bold;
         color: black;
     }
-    .intro p:nth-of-type(2) {
+    p:nth-of-type(2) {
         font-size: 0.9rem;
         color: #999;
     }
 }
-
 .record-icon :deep(path) {
     fill: #abdae2;
 }
 </style>
-@/request/orders/requestOrdersByUserId
