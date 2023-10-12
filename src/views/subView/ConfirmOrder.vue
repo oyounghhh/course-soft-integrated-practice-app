@@ -3,13 +3,15 @@
     <main>
         <div class="date-item" v-for="item of dataShow">
             <h2>{{ item.title }}</h2>
-            <div>
+            <div v-if="item.isShow">
                 <p
                     v-for="(contentArr, i) of item.contents"
                     :key="i"
                     class="content-item"
                 >
-                    <span v-for="(c, i) of contentArr" :key="c.i">{{ c }}</span>
+                    <span v-for="(c, i) of contentArr" :key="c?.i">{{
+                        c
+                    }}</span>
                 </p>
             </div>
         </div>
@@ -23,9 +25,14 @@
 </template>
 
 <script setup>
+import { ref, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import ViewHeader from '@/components/ViewHeader.vue'
+import requestHospital from '@/request/hospital/requestHospital'
+import { onBeforeMount } from 'vue'
+import requestSetmeal from '@/request/setmeal/requestSetmeal'
+import { getSessionStorage } from '@/utils/storage'
 
 const route = useRoute()
 const router = useRouter()
@@ -34,52 +41,78 @@ const { hpId, smId, dateSelected, isShowPayment } = route.query
 const totalAmount = 350
 const title = `确认订单`
 
-const users = {
-    userId: '1',
-    userPhone: '123xxxx434',
-    realName: '某某某',
-    identityCard: '123456xxxxxxxxx',
-    birthday: '2001-10-10',
-}
-const hospital = {
-    name: 'xx医院',
-    businessHours: '周一至周五',
-    deadline: '采血截止时间10:00',
-    telephone: '123xxxxxxx',
-    address: 'xx省xx市',
-}
-const packageType = {
-    name: '男士套餐',
-}
+const users = getSessionStorage('user')
+// const setmealRef = ref({})
+// const hospitalRef = ref({})
 
-const dataShow = [
+const dataShow = reactive([
     {
         title: '体检人信息',
+        isShow: true,
         contents: [
             ['姓名：', users.realName],
             ['证件号码：', users.identityCard],
             ['出生日期：', users.birthday],
-            ['手机号码：', users.userPhone],
+            ['手机号码：', users.userId],
         ],
     },
-    { title: '体检日期', contents: [[dateSelected]] },
+    {
+        title: '体检日期',
+        isShow: true,
+        contents: [[dateSelected]],
+    },
     {
         title: '体检机构',
+        isShow: false,
         contents: [
-            [hospital.name],
-            ['营业时间：', hospital.businessHours],
-            ['采血截止：', hospital.deadline],
-            ['机构电话：', hospital.telephone],
-            ['机构地址：', hospital.address],
+            [
+                /* hospitalRef.value?.name */
+            ],
+            ['营业时间：' /* , hospitalRef.value?.businessHours */],
+            ['采血截止：' /* , hospitalRef.value?.deadline */],
+            ['机构电话：' /* , hospitalRef.value?.telephone */],
+            ['机构地址：' /* , hospitalRef.value?.address */],
         ],
     },
-    { title: '套餐类型', contents: [[packageType.name]] },
-]
-
+    {
+        title: '套餐类型',
+        isShow: false,
+        contents: [
+            [
+                /* setmealRef.value?.name */
+            ],
+        ],
+    },
+])
 //------------------------------ events ------------------------------
 
 function pay() {
     router.push('/appointment-success')
+}
+
+//------------------------------ life cycle ------------------------------
+onBeforeMount(async () => {
+    await getHospitalById(hpId)
+    await getSetmealById(smId)
+})
+
+//------------------------------ fetch data ------------------------------
+
+async function getHospitalById(hpId) {
+    const hospital = await requestHospital(hpId)
+    // hospitalRef.value = hospital
+    dataShow[2].isShow = true
+    dataShow[2].contents[0].push(hospital.name)
+    dataShow[2].contents[1].push(hospital.businessHours)
+    dataShow[2].contents[2].push(hospital.deadline)
+    dataShow[2].contents[3].push(hospital.telephone)
+    dataShow[2].contents[4].push(hospital.address)
+}
+async function getSetmealById(smId) {
+    const setmeal = await requestSetmeal(smId)
+    // setmealRef.value = setmeal
+    dataShow[3].isShow = true
+    dataShow[3].contents[0].push(setmeal.name)
 }
 </script>
 
