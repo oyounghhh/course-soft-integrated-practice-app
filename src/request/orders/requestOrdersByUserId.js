@@ -1,4 +1,5 @@
 import { post } from '@/request'
+import requestSetmeal from '../setmeal/requestSetmeal'
 
 /**
  * 获取医院信息
@@ -31,6 +32,24 @@ export default async function requestOrdersByUserId(data) {
     const hospitals = await Promise.allSettled(promiseArr)
     orders.forEach((order, index) => {
         order.hospital = hospitals[index].value
+    })
+    return orders
+}
+
+/**
+ * 根据 userId 获取预约订单的信息（包含套餐信息）
+ * @param {string} userId
+ * @returns {Promise<Array<OrdersSetmeal>>}
+ */
+export async function requestOrdersSetmealByUserId(userId) {
+    const orders = await getOrdersArr(userId)
+    const promiseArr = []
+    orders.forEach((order) => {
+        promiseArr.push(requestSetmeal(order.smId))
+    })
+    const setmeals = await Promise.allSettled(promiseArr)
+    orders.forEach((order, index) => {
+        order.setmeal = setmeals[index].value
     })
     return orders
 }
