@@ -5,5 +5,5 @@ import { post } from '@/request'
  * @returns {Promise<Array<Hospital>>}
  */
 export default function listHospital() {
-    return post('/hospital/listHospital')
+    return post('/hospital/listHospital', { state: 1 })
 }
