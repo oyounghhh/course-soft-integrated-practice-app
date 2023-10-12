@@ -17,7 +17,7 @@
                 <div
                     v-for="week of '日一二三四五六'"
                     :key="week"
-                    class="date-grid-cell"
+                    class="date-grid-cell date-grid-week"
                 >
                     {{ week }}
                 </div>
@@ -27,7 +27,10 @@
                     class="date-grid-cell pointer"
                     @click="selectDay(index)"
                 >
-                    <span :class="{ selected: calendar.isSelected }">
+                    <span
+                        class="date-grid-day-cell"
+                        :class="{ selected: calendar.isSelected }"
+                    >
                         {{ calendar.day }}
                     </span>
                     <span>
@@ -96,7 +99,7 @@ function processCalendarArr() {
             return
         }
         const ymd = new Date(calendar.ymd)
-        calendar.day = ymd.getDay()
+        calendar.day = ymd.getDate()
         calendar.isSelected = checkSameDay(ymd, calendarState.dateSelected)
     })
 }
@@ -194,23 +197,27 @@ main {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
+            &.date-grid-week {
+                justify-content: center;
+            }
 
             span:first-of-type {
                 margin: 4px;
                 font-size: 1.2rem;
                 font-weight: bold;
-
-                --side: 2rem;
-                line-height: var(--side);
-                width: var(--side);
                 text-align: center;
-                border-radius: 50%;
             }
             span:last-of-type {
                 color: #bbb;
                 font-size: 1rem;
             }
+        }
+        .date-grid-day-cell {
+            --side: 2rem;
+            line-height: var(--side);
+            width: var(--side);
+            border-radius: 50%;
         }
 
         .selected {
